@@ -1,6 +1,6 @@
 # About the Project
 
-The Heello API library provides simple full access to the Heello API.
+The Heello API library provides simple-to-use access to the Heello API and takes care of all the OAuth headaches for you.
 
 ## Dependencies
 
@@ -8,4 +8,14 @@ The Heello API library provides simple full access to the Heello API.
 
 ## Example Usage
 
-Check out the file aptly named EXAMPLE.php to see how the class is used. More examples coming soon.
+``` php
+$heello = new Heello\Client($client_id, $client_secret);
+$user = $heello->users->show(array('id' => 3));
+
+echo "Username: {$user->username}, Name: {$user->name}";
+```
+
+## Contributors
+
+* [Ryan LeFevre](http://heello.com/meltingice)
+* [Casey Mees](http://heello.com/muzzlefur)

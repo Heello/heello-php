@@ -13,13 +13,16 @@ $client_secret = "def456";
 ########################
 ## Pre-Authentication ##
 ########################
-$heello = new Heello($client_id, $client_secret, '/oauth/finish');
-$heello->authorization_redirect();
+$heello = new Heello\Client($client_id, $client_secret, '/oauth/finish');
+//$heello->authorization_redirect();
 
 ########################
 ## Post-Auth Redirect ##
 ########################
-$heello = new Heello($client_id, $client_secret);
-$heello->finish_authorization();
+//$heello = new Heello\Client($client_id, $client_secret);
+//$heello->finish_authorization();
 
-$auth_user = $heello->me();
+//$auth_user = $heello->me();
+
+$user = $heello->users->show(array('id' => 'meltingice', 'username' => true));
+print_r($user);

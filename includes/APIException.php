@@ -9,6 +9,7 @@
  *
  * Source code is hosted at http://github.com/meltingice/TwitPic-API-for-PHP
  */
- 
-class HeelloAPIException extends Exception {}
+
+namespace Heello;
+class APIException extends \Exception {}
 ?>

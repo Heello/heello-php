@@ -1,16 +1,18 @@
 <?
 /*
- * TwitPic API for PHP
+ * Heello API for PHP
  * Copyright 2010 Ryan LeFevre - @meltingice
  * PHP version 5.3.0+
  *
  * Licensed under the New BSD License, more info in LICENSE file
  * included with this software.
  *
- * Source code is hosted at http://github.com/meltingice/TwitPic-API-for-PHP
+ * Source code is hosted at http://github.com/Heello/heello-php
  */
  
-class HeelloConfig {
+namespace Heello;
+
+class Config {
 	# read-only or read-write authentication
 	const NOCREDS = 1;
 	const READONLY = 2;
@@ -48,7 +50,8 @@ class HeelloConfig {
 	public function get_state() {
 		if (empty($this->state)) {
 			if (!session_id()) {
-				throw new HeelloAPIException("Automatic handling of session state requires an already active session.");
+				// A session isn't running, so now we don't know what to do.
+				throw new APIException("Automatic handling of session state requires an already active session.");
 			}
 			
 			$this->state = sha1(uniqid('', true));

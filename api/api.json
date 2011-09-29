@@ -1,0 +1,34 @@
+{
+	"users": {
+		"show": {
+			"url": ":id",
+			"method": "GET",
+			"requires_auth": false
+		},
+		"listeners": {
+			"url": ":id/listeners",
+			"method": "GET",
+			"requires_auth": false
+		},
+		"listening": {
+			"url": ":id/listening",
+			"method": "GET",
+			"requires_auth": false
+		},
+		"search": {
+			"method": "GET",
+			"requires_auth": false,
+			"required_params": ["term"]
+		},
+		"listen": {
+			"url": ":id/listen",
+			"method": "POST",
+			"requires_auth": true
+		},
+		"unlisten": {
+			"url": ":id/unlisten",
+			"method": "POST",
+			"requires_auth": true
+		}
+	}
+}
