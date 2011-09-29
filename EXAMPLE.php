@@ -25,4 +25,3 @@ $heello = new Heello\Client($client_id, $client_secret, '/oauth/finish');
 //$auth_user = $heello->me();
 
 $user = $heello->users->show(array('id' => 'meltingice', 'username' => true));
-print_r($user);

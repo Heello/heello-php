@@ -22,6 +22,7 @@ class Request {
 	}
 	
 	public function addParameter($key, $val) {
+		echo "$key => $val\n";
 		if ($this->method == self::GET) {
 			$url = $this->request->getUrl();
 			$url->setQueryVariable($key, $val);

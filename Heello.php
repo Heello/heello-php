@@ -83,13 +83,6 @@ class Client {
 		return $this->me;
 	}
 	
-	/**
-	 * Throw the request over to the API class to handle
-	 */
-	public function __get($key) {
-		return $this->api->{$key};
-	}
-	
 	private function has_auth_error() {
 		return Util::gpval('error', false);
 	}
@@ -120,16 +113,23 @@ class Client {
 	}
 	
 	private function prepare_token_request(){
-		$request = new HTTP_Request2($this->token_uri, HTTP_Request2::METHOD_POST);
+		$request = new Request(Request::POST, '/oauth/token');
 
 		$client = self::$config->get_client();
-		$request->addPostParameter("client_id", $client['id']);
-		$request->addPostParameter("client_secret", $client['secret']);
-		$request->addPostParameter("redirect_uri", self::$config->get_redirect_url());
-		$request->addPostParameter("code", gpval('code'));
-		$request->addPostParameter("response_type", 'token');
-		$request->addPostParameter("grant_type", 'authorization_code');
+		$request->addParameter("client_id", $client['id']);
+		$request->addParameter("client_secret", $client['secret']);
+		$request->addParameter("redirect_uri", self::$config->get_redirect_url());
+		$request->addParameter("code", Util::gpval('code'));
+		$request->addParameter("response_type", 'token');
+		$request->addParameter("grant_type", 'authorization_code');
 
 		return $request;
+	}
+	
+	/**
+	 * Throw the request over to the API class to handle
+	 */
+	public function __get($key) {
+		return $this->api->{$key};
 	}
 }
