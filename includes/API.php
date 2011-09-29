@@ -44,7 +44,7 @@ class API {
 	 * finishes. This value is also cached in Heello\Client
 	 */
 	public function me() {
-		$request = new Request(Request::POST, 'me');
+		$request = new Request(Request::GET, 'me');
 		return $request->send(true);
 	}
 

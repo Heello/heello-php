@@ -14,7 +14,7 @@ class Request {
 	function __construct($method, $url) {
 		$this->method = $method;
 		
-		$this->url = $this->get_request_url_base();
+		$this->url = self::get_request_url_base();
 		$this->url .= trim($url, "/ ");
 		$this->url .= '.json';
 		
@@ -22,7 +22,6 @@ class Request {
 	}
 	
 	public function addParameter($key, $val) {
-		echo "$key => $val\n";
 		if ($this->method == self::GET) {
 			$url = $this->request->getUrl();
 			$url->setQueryVariable($key, $val);
@@ -62,7 +61,7 @@ class Request {
 		}
 	}
 	
-	public function get_request_url_base() {
+	public static function get_request_url_base() {
 		$url = "http" . (API::SECURE ? "s" : "") . "://";
 		$url .= API::DOMAIN;
 		$url .= "/" . API::VERSION . "/";

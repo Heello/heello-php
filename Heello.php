@@ -37,14 +37,14 @@ class Client {
 	public function config() { return self::$config; }
 	
 	public function get_authorization_url($display = 'full') {
-		if ($this->config->mode() == Config::NOCREDS) {
+		if (self::$config->mode() == Config::NOCREDS) {
 			throw new APIException("Client ID required to build authorization URL");
 		}
 		
-		$url = $this->api->get_request_url_base();
-		$url .= "/oauth/authorize?";
+		$url = Request::get_request_url_base();
+		$url .= "oauth/authorize?";
 		
-		$client = $this->config->get_client();
+		$client = self::$config->get_client();
 		$params = array(
 			'client_id' => $client['id'],
 			'response_type' => 'code',
@@ -72,6 +72,8 @@ class Client {
 			// ... then retrieve the user's access token.
 			$access_token = $this->get_access_token();
 			self::$config->set_access_token($access_token);
+		} else {
+			throw new APIException("Invalid state");
 		}
 	}
 	
@@ -92,24 +94,14 @@ class Client {
 	}
 	
 	private function get_access_token() {
-		if (!self::$config->get_access_token()) {
+		if (self::$config->get_access_token()) {
 			return self::$config->get_access_token();	
 		}
 		
 		$request = $this->prepare_token_request();
+		$response = $request->send();
 		
-		try {
-			$response = $request->send();
-
-			if ($response->getStatus() == 200) {
-				$token_info = json_decode($response->getBody());
-				return $token_info->access_token;
-			} else {
-				throw new APIException('Unexpected HTTP status: ' . $response->getStatus() . ' ' . $response->getReasonPhrase());
-			}
-		} catch (HTTP_Request2_Exception $e) {
-				throw new APIException('Error: ' . $e->getMessage());
-		}
+		return $response->access_token;
 	}
 	
 	private function prepare_token_request(){

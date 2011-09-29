@@ -54,8 +54,12 @@ class Config {
 				throw new APIException("Automatic handling of session state requires an already active session.");
 			}
 			
-			$this->state = sha1(uniqid('', true));
-			$_SESSION['HEELLO_API_STATE'] = $this->state;
+			if (isset($_SESSION['HEELLO_API_STATE'])) {
+				$this->state = $_SESSION['HEELLO_API_STATE'];
+			} else {
+				$this->state = sha1(uniqid('', true));
+				$_SESSION['HEELLO_API_STATE'] = $this->state;
+			}		
 		}
 		
 		return $this->state;
