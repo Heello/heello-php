@@ -9,6 +9,8 @@ The Heello API library provides simple-to-use access to the Heello API and takes
 ## Example Usage
 
 ```php
+<?
+
 $heello = new Heello\Client($client_id, $client_secret);
 $user = $heello->users->show(array('id' => 3));
 
