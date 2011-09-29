@@ -34,7 +34,7 @@ class Client {
 		$this->api = new API(self::$config);
 	}
 	
-	public function config() { return self::$config; }
+	public static function config() { return self::$config; }
 	
 	public function get_authorization_url($display = 'full') {
 		if (self::$config->mode() == Config::NOCREDS) {
@@ -72,6 +72,8 @@ class Client {
 			// ... then retrieve the user's access token.
 			$access_token = $this->get_access_token();
 			self::$config->set_access_token($access_token);
+			
+			return $access_token;
 		} else {
 			throw new APIException("Invalid state");
 		}

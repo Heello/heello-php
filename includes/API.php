@@ -20,14 +20,12 @@ class API {
 	private static $API_PATH;
 
 	private $api = array();
-	private $config;
 	private $category = null;
 	private $method = null;
 	private $format = null;
 
-	public function __construct(Config $config) {
+	public function __construct() {
 		self::$API_PATH = dirname(__FILE__) . '/../api/api.json';
-		$this->config = $config;
 
 		$jsonApi = json_decode(file_get_contents(self::$API_PATH));
 		foreach ($jsonApi as $endpoint => $actions) {
@@ -96,8 +94,7 @@ class API {
 		/* if auth_required is not set, assume false */
 		if (!isset($options->requires_auth)) return false;
 		elseif ($options->requires_auth == false) return false;
-
-		if (self::$config->mode() != Config::READWRITE) {
+		if (Client::config()->mode() != Config::READWRITE) {
 			throw new APIException("API call {$this->category}/{$this->method} requires authentication.");
 		}
 

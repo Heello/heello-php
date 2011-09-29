@@ -45,6 +45,7 @@ class Request {
 			$response = $this->request->send();
 			if ($response->getStatus() == 200) {
 				$body = $response->getBody();
+
 				if (strlen($body) > 0) {
 					return json_decode($body);
 				}
