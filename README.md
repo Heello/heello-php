@@ -46,6 +46,7 @@ $user = $heello->me();
 In OAuth 2, access tokens only last so long before they expire and require re-issuing. This is where the refresh token comes into play. This is handled automatically by the library. To be notified when a new access token is issued, and to save the new token, you can use:
 
 ```php
+<?
 $heello::config()->refresh_token_callback(function ($access_token, $refresh_token) {
 	// This will be called whenever the tokens are refreshed.
 	// You will want to update your user storage with these new tokens.
@@ -56,7 +57,6 @@ $heello::config()->refresh_token_callback(function ($access_token, $refresh_toke
 
 ```php
 <?
-
 $heello = new Heello\Client($client_id, $client_secret);
 
 // If we need to make auth'd calls, and already have a user
