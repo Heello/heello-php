@@ -11,5 +11,8 @@
  */
 
 namespace Heello;
-class APIException extends \Exception {}
-?>
+class APIException extends \Exception {
+	const EXPIRED_TOKEN = 'expired_token';
+}
+
+class ExpiredAccessTokenException extends \Exception {}

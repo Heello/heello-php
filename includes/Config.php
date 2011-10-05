@@ -19,13 +19,15 @@ class Config {
 	const READWRITE = 3;
 	
 	private $client_id, $client_secret;
-	private $access_token;
+	private $access_token, $refresh_token;
 	private $redirect_url;
 	private $state;
+	private $refresh_token_callback;
 	
 	public function __construct($client_id, $client_secret) {
 		$this->client_id = $client_id;
 		$this->client_secret = $client_secret;
+		$this->refresh_token_callback = function ($access_token, $refresh_token) {};
 	}
 	
 	public function mode() {
@@ -38,14 +40,14 @@ class Config {
 		return array('id' => $this->client_id, "secret" => $this->client_secret);
 	}
 	
-	public function get_access_token() {
-		return $this->access_token;
+	public function get_tokens() {
+		if (self::mode() == self::READONLY) return false;
+		return array('access' => $this->access_token, 'refresh' => $this->refresh_token);
 	}
 	
 	public function get_redirect_url() {
 		return $this->redirect_url;
 	}
-	
 	
 	public function get_state() {
 		if (empty($this->state)) {
@@ -70,6 +72,10 @@ class Config {
 		$this->access_token = $token;
 	}
 	
+	public function set_refresh_token($token) {
+		$this->refresh_token = $token;
+	}
+	
 	public function set_redirect_url($url) {
 		$this->redirect_url = $url;
 	}
@@ -77,7 +83,13 @@ class Config {
 	public function set_state($state) {
 		$this->state = $state;
 	}
+	
+	public function refresh_token_callback($cb) {
+		$this->refresh_token_callback = $cb;
+	}
+	
+	public function execute_refresh_token_callback() {
+		$cb = $this->refresh_token_callback;
+		$cb($this->access_token, $this->refresh_token);
+	}
 }
-
-
-?>

@@ -63,10 +63,36 @@ class API {
 		}
 
 		$request->addParameters($method_args);
-		$response = $request->send($this->requires_authentication());
+		
+		$response = null;
+		try {
+			$response = $request->send($this->requires_authentication());
+		} catch (ExpiredAccessTokenException $e) {
+			$this->refresh_access_token();
+			$response = $request->send($this->requires_authentication());
+		}
 
 		$this->reset_parameters();
 		return $response;
+	}
+	
+	private function refresh_access_token() {
+		$request = new Request(Request::POST, '/oauth/token');
+		$client = Client::config()->get_client();
+		$token = Client::config()->get_tokens();
+		
+		$request->addParameter('client_id', $client['id']);
+		$request->addParameter('client_secret', $client['secret']);
+		$request->addParameter('redirect_uri', Client::config()->get_redirect_url());
+		$request->addParameter('response_type', 'token');
+		$request->addParameter('refresh_token', $token['refresh']);
+		$request->addParameter('grant_type', 'refresh_token');
+		$response = $request->send();
+		
+		Client::config()->set_access_token($response->access_token);
+		Client::config()->set_refresh_token($response->refresh_token);
+		
+		Client::config()->execute_refresh_token_callback();
 	}
 
 	/*

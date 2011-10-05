@@ -38,7 +38,8 @@ class Request {
 	
 	public function send($require_auth = false) {
 		if ($require_auth) {
-			$this->addParameter('access_token', Client::config()->get_access_token());
+			$tokens = Client::config()->get_tokens();
+			$this->addParameter('access_token', $tokens['access']);
 		}
 		
 		try {
@@ -51,6 +52,11 @@ class Request {
 				}
 	
 				return true;
+			} elseif ($response->getStatus() == 401) {
+				$error = json_decode($response->getBody())->error;
+				if ($error == APIException::EXPIRED_TOKEN) {
+					throw new ExpiredAccessTokenException();
+				}
 			} else {
 				throw new APIException(
 					'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
