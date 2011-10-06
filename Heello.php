@@ -70,9 +70,7 @@ class Client {
 		// If we have a valid state...
 		if ($this->has_valid_state()) {
 			// ... then retrieve the user's access token.
-			$tokens = $this->get_tokens();
-			
-			return $tokens;
+			return $this->get_tokens();
 		} else {
 			throw new APIException("Invalid state");
 		}
@@ -86,15 +84,7 @@ class Client {
 		return $this->me;
 	}
 	
-	private function has_auth_error() {
-		return Util::gpval('error', false);
-	}
-	
-	private function has_valid_state() {
-		return Util::gpval('state') == self::$config->get_state();
-	}
-	
-	private function get_tokens() {
+	public function get_tokens() {
 		if (self::$config->get_tokens()) {
 			return self::$config->get_tokens();	
 		}
@@ -106,6 +96,14 @@ class Client {
 		self::$config->set_refresh_token($response->refresh_token);
 		
 		return self::$config->get_tokens();
+	}
+	
+	private function has_auth_error() {
+		return Util::gpval('error', false);
+	}
+	
+	private function has_valid_state() {
+		return Util::gpval('state') == self::$config->get_state();
 	}
 	
 	private function prepare_token_request(){
