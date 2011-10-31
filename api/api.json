@@ -37,6 +37,12 @@
 			"method": "GET",
 			"requires_auth": false
 		},
+		"create": {
+			"url": "/",
+			"method": "POST",
+			"requires_auth": true,
+			"required_params": ["text"]
+		},
 		"live": {
 			"method": "GET",
 			"requires_auth": true
@@ -73,6 +79,19 @@
 			"url": ":id/echo",
 			"method": "POST",
 			"requires_auth": true
+		}
+	},
+	"locations": {
+		"show": {
+			"url": ":id",
+			"method": "GET",
+			"required_params": ["id"],
+			"requires_auth": false
+		},
+		"search": {
+			"method": "POST",
+			"required_params": ["lat", "long"],
+			"requires_auth": false
 		}
 	}
 }

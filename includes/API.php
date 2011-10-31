@@ -13,7 +13,7 @@
 namespace Heello;
 
 class API {
-	const SECURE = false;
+	const SECURE = true;
 	const DOMAIN = "api.heello.com";
 	const VERSION = 1;
 
