@@ -29,6 +29,11 @@
 			"url": ":id/unlisten",
 			"method": "POST",
 			"requires_auth": true
+		},
+		"relationship": {
+			"method": "GET",
+			"requires_auth": false,
+			"required_params": ["userA", "userB"]
 		}
 	},
 	"pings": {
