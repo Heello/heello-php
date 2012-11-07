@@ -59,11 +59,6 @@
 			"method": "DELETE",
 			"required_params": ["id","access_token"],
 			"requires_auth": true
-		},
-		"relationship": {
-			"method": "GET",
-			"requires_auth": false,
-			"required_params": ["userA", "userB"]
 		}
 	},
 	"pings": {
