@@ -36,14 +36,22 @@ class API {
 		}
 	}
 
-	/**
-	 * This is a special API request because it doesn't follow the standard
-	 * REST format and is usually called immediately after authorization
-	 * finishes. This value is also cached in Heello\Client
+
+	/*
+	 * This function handles the API category that is
+	 * being called and if valid, returns $this so that
+	 * the __call() function can be called next.
 	 */
-	public function me() {
-		$request = new Request(Request::GET, 'me');
-		return $request->send(true);
+	public function __get($key) {
+		return $this->api_category($key);
+	}
+
+	/*
+	 * The __call() function handles accessing the API
+	 * method.
+	 */
+	public function __call($method, $args) {
+		return $this->api_method($method, $args);
 	}
 
 	/*
@@ -58,12 +66,14 @@ class API {
 
 		if ($options->method == 'POST') {
 			$request = new Request(Request::POST, $this->get_request_url($method_args));
+		} elseif ($options->method == 'DELETE') {
+			$request = new Request(Request::DELETE, $this->get_request_url($method_args));
 		} else { // assume GET?
 			$request = new Request(Request::GET, $this->get_request_url($method_args));
 		}
 
 		$request->addParameters($method_args);
-		
+
 		$response = null;
 		try {
 			$response = $request->send($this->requires_authentication());
@@ -75,12 +85,12 @@ class API {
 		$this->reset_parameters();
 		return $response;
 	}
-	
+
 	private function refresh_access_token() {
 		$request = new Request(Request::POST, '/oauth/token');
 		$client = Client::config()->get_client();
 		$token = Client::config()->get_tokens();
-		
+
 		$request->addParameter('client_id', $client['id']);
 		$request->addParameter('client_secret', $client['secret']);
 		$request->addParameter('redirect_uri', Client::config()->get_redirect_url());
@@ -88,10 +98,10 @@ class API {
 		$request->addParameter('refresh_token', $token['refresh']);
 		$request->addParameter('grant_type', 'refresh_token');
 		$response = $request->send();
-		
+
 		Client::config()->set_access_token($response->access_token);
 		Client::config()->set_refresh_token($response->refresh_token);
-		
+
 		Client::config()->execute_refresh_token_callback();
 	}
 
@@ -104,7 +114,22 @@ class API {
 		if (!isset($options->required_params)) return;
 
 		foreach ($options->required_params as $param) {
-			if (!array_key_exists($param, $args)) {
+			if ($param == "access_token"){
+				$tokens = Client::config()->get_tokens();
+				if (!$tokens['access']){
+					throw new APIException("Missing required parameter '{$param}' for {$this->category}/{$this->method}");
+				}
+			} elseif ($param == "key"){
+				$client_config = Client::config()->get_client();
+				if (!$client_config['id']){
+					throw new APIException("Missing required parameter '{$param}' for {$this->category}/{$this->method}");
+				}
+			} elseif ($param == "secret"){
+				$client_config = Client::config()->get_client();
+				if (!$client_config['secret']){
+					throw new APIException("Missing required parameter '{$param}' for {$this->category}/{$this->method}");
+				}
+			} elseif (!array_key_exists($param, $args) || !$args[$param]) {
 				throw new APIException("Missing required parameter '{$param}' for {$this->category}/{$this->method}");
 			}
 		}
@@ -128,7 +153,7 @@ class API {
 	}
 
 	/*
-	 * Builds the TwitPic API request URL
+	 * Builds the API request URL
 	 */
 	private function get_request_url($args) {
 		$options = $this->endpoint_options();
@@ -145,10 +170,6 @@ class API {
 		}
 
 		return $url;
-	}
-
-	private function truncate($msg) {
-		return mb_substr($msg, 0, self::MAX_PING_LENGTH, 'UTF-8');
 	}
 
 	private function reset_parameters() {
@@ -171,7 +192,6 @@ class API {
 		if (!isset($this->api[$category])) {
 			throw new APIException('API category not found');
 		}
-
 		$this->category = $category;
 		return $this;
 	}
@@ -190,22 +210,5 @@ class API {
 		$this->method = $method;
 		if (count($args) > 0) $args = $args[0];
 		return $this->execute($args);
-	}
-
-	/*
-	 * This function handles the API category that is
-	 * being called and if valid, returns $this so that
-	 * the __call() function can be called next.
-	 */
-	public function __get($key) {
-		return $this->api_category($key);
-	}
-
-	/*
-	 * The __call() function handles accessing the API
-	 * method.
-	 */
-	public function __call($method, $args) {
-		return $this->api_method($method, $args);
 	}
 }

@@ -8,6 +8,7 @@ namespace Heello;
 class Request {
 	const GET = \HTTP_Request2::METHOD_GET;
 	const POST = \HTTP_Request2::METHOD_POST;
+	const DELETE = \HTTP_Request2::METHOD_DELETE;
 
 	private $method, $url, $request;
 
@@ -25,7 +26,7 @@ class Request {
 	}
 
 	public function addParameter($key, $val) {
-		if ($this->method == self::GET) {
+		if ($this->method == self::GET || $this->method == self::DELETE) {
 			$url = $this->request->getUrl();
 			$url->setQueryVariable($key, $val);
 		} else {
@@ -40,18 +41,22 @@ class Request {
 	}
 
 	public function send($require_auth = false) {
-		if ($require_auth) {
-			$tokens = Client::config()->get_tokens();
+		$tokens = Client::config()->get_tokens();
+		if ($require_auth || $tokens['access']) {
 			$this->addParameter('access_token', $tokens['access']);
+		} else{
+			$client_config = Client::config()->get_client();
+			$this->addParameter('key', $client_config['id']);
+			$this->addParameter('secret', $client_config['secret']);
 		}
 
 		try {
 			$response = $this->request->send();
-			if ($response->getStatus() == 200) {
+			if ($response->getStatus() == 200 || $response->getStatus() == 201) {
 				$body = $response->getBody();
 
 				if (strlen($body) > 0) {
-					return json_decode($body);
+					return json_decode($body)->response;
 				}
 
 				return true;
@@ -59,11 +64,14 @@ class Request {
 				$error = json_decode($response->getBody())->error;
 				if ($error == APIException::EXPIRED_TOKEN) {
 					throw new ExpiredAccessTokenException();
+				} else{
+					throw new APIException(
+						$response->getStatus() . ' ' . $response->getReasonPhrase()
+					);
 				}
 			} else {
 				throw new APIException(
-					'Unexpected HTTP status: ' . $response->getStatus() . ' ' .
-					$response->getReasonPhrase()
+					$response->getStatus() . ' ' . $response->getReasonPhrase()
 				);
 			}
 		} catch (HTTP_Request2_Exception $e) {
@@ -73,8 +81,7 @@ class Request {
 
 	public static function get_request_url_base() {
 		$url = "http" . (API::SECURE ? "s" : "") . "://";
-		$url .= API::DOMAIN;
-		$url .= "/" . API::VERSION . "/";
+		$url .= API::DOMAIN . "/";
 
 		return $url;
 	}

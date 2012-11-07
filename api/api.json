@@ -1,33 +1,63 @@
 {
 	"users": {
+		"me":{
+			"url": "me",
+			"method": "GET",
+			"required_params": ["access_token"],
+			"requires_auth": true
+		},
 		"show": {
 			"url": ":id",
 			"method": "GET",
+			"required_params": ["id","key"],
 			"requires_auth": false
 		},
 		"listeners": {
 			"url": ":id/listeners",
 			"method": "GET",
+			"required_params": ["id","key"],
 			"requires_auth": false
 		},
 		"listening": {
 			"url": ":id/listening",
 			"method": "GET",
+			"required_params": ["id","key"],
 			"requires_auth": false
 		},
-		"search": {
+		"timeline": {
+			"url": "timeline",
 			"method": "GET",
-			"requires_auth": false,
-			"required_params": ["term"]
+			"required_params": ["access_token"],
+			"requires_auth": true
+		},
+		"notifications": {
+			"url": "notifications",
+			"method": "GET",
+			"required_params": ["access_token"],
+			"requires_auth": true
+		},
+		"pings": {
+			"url": ":id/pings",
+			"method": "GET",
+			"required_params": ["id","key"],
+			"requires_auth": false
+		},
+		"lookup": {
+			"url": "lookup",
+			"method": "GET",
+			"required_params": ["ids"],
+			"requires_auth": false
 		},
 		"listen": {
 			"url": ":id/listen",
 			"method": "POST",
+			"required_params": ["id","access_token"],
 			"requires_auth": true
 		},
 		"unlisten": {
-			"url": ":id/unlisten",
-			"method": "POST",
+			"url": ":id/listen",
+			"method": "DELETE",
+			"required_params": ["id","access_token"],
 			"requires_auth": true
 		}
 	},
@@ -35,63 +65,33 @@
 		"show": {
 			"url": ":id",
 			"method": "GET",
+			"required_params": ["id","key"],
+			"requires_auth": false
+		},
+		"pings": {
+			"url": "/",
+			"method": "GET",
+			"required_params": ["key"],
 			"requires_auth": false
 		},
 		"create": {
 			"url": "/",
 			"method": "POST",
-			"requires_auth": true,
-			"required_params": ["text"]
-		},
-		"live": {
-			"method": "GET",
-			"requires_auth": true
-		},
-		"user": {
-			"method": "GET",
-			"required_params": ["id"],
-			"requires_auth": false
-		},
-		"home": {
-			"method": "GET",
-			"requires_auth": true
-		},
-		"replies": {
-			"method": "GET",
-			"required_params": ["id"]
-		},
-		"comments": {
-			"method": "GET",
-			"requires_auth": false,
-			"required_params": ["id"]
-		},
-		"media": {
-			"url": "media/:size/:id",
-			"method": "GET",
-			"requires_auth": false
-		},
-		"delete": {
-			"url": ":id/delete",
-			"method": "POST",
+			"required_params": ["access_token","key"],
 			"requires_auth": true
 		},
 		"echo": {
 			"url": ":id/echo",
 			"method": "POST",
+			"required_params": ["access_token","key"],
+			"requires_auth": true
+		},
+		"destroy": {
+			"url": ":id",
+			"method": "DELETE",
+			"required_params": ["access_token","key"],
 			"requires_auth": true
 		}
-	},
-	"locations": {
-		"show": {
-			"url": ":id",
-			"method": "GET",
-			"required_params": ["id"],
-			"requires_auth": false
-		},
-		"search": {
-			"method": "POST",
-			"required_params": ["lat", "long"],
-			"requires_auth": false
-		}
+
 	}
 }
