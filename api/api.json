@@ -6,6 +6,12 @@
 			"required_params": ["access_token"],
 			"requires_auth": true
 		},
+		"checkins": {
+			"url": ":id/checkins",
+			"method": "GET",
+			"required_params": ["id","access_token"],
+			"requires_auth": true
+		},
 		"show": {
 			"url": ":id",
 			"method": "GET",
@@ -77,19 +83,19 @@
 		"create": {
 			"url": "/",
 			"method": "POST",
-			"required_params": ["access_token","key"],
+			"required_params": ["access_token"],
 			"requires_auth": true
 		},
 		"echo": {
 			"url": ":id/echo",
 			"method": "POST",
-			"required_params": ["access_token","key","id"],
+			"required_params": ["access_token","id"],
 			"requires_auth": true
 		},
 		"destroy": {
 			"url": ":id",
 			"method": "DELETE",
-			"required_params": ["access_token","key","id"],
+			"required_params": ["access_token","id"],
 			"requires_auth": true
 		}
 	},
@@ -104,6 +110,14 @@
 			"url": ":id",
 			"method": "GET",
 			"required_params": ["key","id"],
+			"requires_auth": false
+		}
+	},
+	"checkins": {
+		"show": {
+			"url": ":id",
+			"method": "GET",
+			"required_params": ["access_token"],
 			"requires_auth": false
 		}
 	}
