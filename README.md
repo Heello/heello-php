@@ -2,6 +2,8 @@
 
 The Heello API library provides simple-to-use access to the Heello API and takes care of all the OAuth headaches for you.
 
+** Note: Currently in beta as we build out more support. More documentation and updates coming soon.
+
 ## Dependencies
 
 * HTTP_Request2

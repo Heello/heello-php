@@ -111,6 +111,12 @@
 			"method": "GET",
 			"required_params": ["key","id"],
 			"requires_auth": false
+		},
+		"create": {
+			"url": "/",
+			"method": "POST",
+			"required_params": ["access_token"],
+			"requires_auth": true
 		}
 	},
 	"checkins": {
@@ -119,6 +125,12 @@
 			"method": "GET",
 			"required_params": ["access_token"],
 			"requires_auth": false
+		},
+		"create": {
+			"url": "/",
+			"method": "POST",
+			"required_params": ["access_token"],
+			"requires_auth": true
 		}
 	}
 }
