@@ -68,6 +68,8 @@ class API {
 			$request = new Request(Request::POST, $this->get_request_url($method_args));
 		} elseif ($options->method == 'DELETE') {
 			$request = new Request(Request::DELETE, $this->get_request_url($method_args));
+		} elseif ($options->method == 'PUT') {
+			$request = new Request(Request::PUT, $this->get_request_url($method_args));
 		} else { // assume GET?
 			$request = new Request(Request::GET, $this->get_request_url($method_args));
 		}

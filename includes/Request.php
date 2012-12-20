@@ -8,6 +8,7 @@ namespace Heello;
 class Request {
 	const GET = \HTTP_Request2::METHOD_GET;
 	const POST = \HTTP_Request2::METHOD_POST;
+	const PUT = \HTTP_Request2::METHOD_PUT;
 	const DELETE = \HTTP_Request2::METHOD_DELETE;
 
 	private $method, $url, $request;
@@ -26,7 +27,7 @@ class Request {
 	}
 
 	public function addParameter($key, $val) {
-		if ($this->method == self::GET || $this->method == self::DELETE) {
+		if ($this->method == self::GET || $this->method == self::DELETE || $this->method == self::PUT)  {
 			$url = $this->request->getUrl();
 			$url->setQueryVariable($key, $val);
 		} else {

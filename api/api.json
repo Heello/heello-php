@@ -132,5 +132,13 @@
 			"required_params": ["access_token"],
 			"requires_auth": true
 		}
+	},
+	"accounts": {
+		"update":{
+			"url": "/",
+			"method": "PUT",
+			"required_params": ["access_token"],
+			"requires_auth": true
+		}
 	}
 }
