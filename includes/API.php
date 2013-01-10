@@ -14,7 +14,7 @@ namespace Heello;
 
 class API {
 	const SECURE = true;
-	const DOMAIN = "api.heello.com";
+	const DOMAIN = "heello.com/api";
 	const VERSION = 1;
 
 	private static $API_PATH;
@@ -74,6 +74,7 @@ class API {
 			$request = new Request(Request::GET, $this->get_request_url($method_args));
 		}
 
+		$request->addAttachments($method_args,$options);
 		$request->addParameters($method_args);
 
 		$response = null;

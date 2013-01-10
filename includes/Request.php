@@ -41,6 +41,22 @@ class Request {
 		}
 	}
 
+	public function addAttachments(&$method_args, $endpoint_options, $parent_key=false){
+		foreach ($method_args as $key => &$val){
+			if (is_array($val)){
+				$this->addAttachments($val, $endpoint_options, $key);
+			} else{
+				if (in_array($key, get($endpoint_options,'attachments'))){
+					if (file_exists($val)){
+						$attachment_key = $parent_key ? "{$parent_key}[{$key}]" : $key;
+						$this->request->addUpload($attachment_key,$val,'media');
+						unset($method_args[$key]);
+					}
+				}
+			}
+		}
+	}
+
 	public function send($require_auth = false) {
 		$tokens = Client::config()->get_tokens();
 		if ($require_auth || $tokens['access']) {

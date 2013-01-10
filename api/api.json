@@ -84,6 +84,7 @@
 			"url": "/",
 			"method": "POST",
 			"required_params": ["access_token"],
+      "attachments": ["media"],
 			"requires_auth": true
 		},
 		"echo": {
