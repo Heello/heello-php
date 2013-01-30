@@ -1,4 +1,14 @@
 <?
+/*
+ * Heello API for PHP
+ * Copyright 2013 Ryan LeFevre - @meltingice / Casey Mees - @muzzlefur
+ * PHP version 5.3.0+
+ *
+ * Licensed under the New BSD License, more info in LICENSE file
+ * included with this software.
+ *
+ * Source code is hosted at http://github.com/Heello/heello-php
+ */
 
 namespace Heello;
 
@@ -46,7 +56,7 @@ class Request {
 			if (is_array($val)){
 				$this->addAttachments($val, $endpoint_options, $key);
 			} else{
-				if (in_array($key, get($endpoint_options,'attachments'))){
+				if (in_array($key, Util::get((array)$endpoint_options,'attachments',array()))){
 					if (file_exists($val)){
 						$attachment_key = $parent_key ? "{$parent_key}[{$key}]" : $key;
 						$this->request->addUpload($attachment_key,$val,'media');

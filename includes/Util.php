@@ -1,4 +1,15 @@
 <?
+/*
+ * Heello API for PHP
+ * Copyright 2013 Ryan LeFevre - @meltingice / Casey Mees - @muzzlefur
+ * PHP version 5.3.0+
+ *
+ * Licensed under the New BSD License, more info in LICENSE file
+ * included with this software.
+ *
+ * Source code is hosted at http://github.com/Heello/heello-php
+ */
+
 /**
  * Some basic utility functions to help throughout the Heello API library.
  */
@@ -22,7 +33,7 @@ class Util {
 	 * Checks to see if the given key exists in the given array, and returns
 	 * it if so. Otherwise, returns the default.
 	 */
-	function get($arr, $key, $default = null) {
+	public static function get($arr, $key, $default = null) {
 		return isset($arr[$key])?$arr[$key]:$default;
 	}
 }

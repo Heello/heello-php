@@ -1,7 +1,7 @@
 <?
 /*
  * Heello API for PHP
- * Copyright 2011 Ryan LeFevre - @meltingice
+ * Copyright 2013 Ryan LeFevre - @meltingice / Casey Mees - @muzzlefur
  * PHP version 5.3.0+
  *
  * Licensed under the New BSD License, more info in LICENSE file
