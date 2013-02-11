@@ -23,10 +23,10 @@ class Request {
 
 	private $method, $url, $request;
 
-	function __construct($method, $url) {
+	function __construct($method, $url, $auth_url=false) {
 		$this->method = $method;
 
-		$this->url = self::get_request_url_base();
+		$this->url = $auth_url ? self::get_auth_request_url_base() : self::get_request_url_base();
 		$this->url .= trim($url, "/ ");
 		$this->url .= '.json';
 
@@ -83,7 +83,12 @@ class Request {
 				$body = $response->getBody();
 
 				if (strlen($body) > 0) {
-					return json_decode($body)->response;
+					$json = json_decode($body);
+          if (isset($json->response)){
+            return $json->response;
+          } else{
+            return $json;
+          }
 				}
 
 				return true;
@@ -112,4 +117,12 @@ class Request {
 
 		return $url;
 	}
+
+	public static function get_auth_request_url_base() {
+		$url = "http" . (API::SECURE ? "s" : "") . "://";
+		$url .= API::AUTH_DOMAIN . "/";
+
+		return $url;
+	}
+
 }

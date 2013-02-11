@@ -6,6 +6,7 @@ The Heello API library provides simple-to-use access to the Heello API and takes
 
 ## Dependencies
 
+* PHP >= 5.3
 * HTTP_Request2
 
 ## Examples
@@ -15,6 +16,8 @@ The Heello API library provides simple-to-use access to the Heello API and takes
 ```php
 <?
 // Get these from https://developer.heello.com/ by logging in and creating an application
+require_once('Heello.php')
+
 $heello = new Heello\Client($client_id, $client_secret);
 
 // If we need to make auth'd calls, and already have a user
@@ -23,13 +26,15 @@ Heello\Client::config()->set_access_token($access_token);
 Heello\Client::config()->set_refresh_token($refresh_token);
 
 // An auth'd call
-$my = $heello->users->me();
+$me = $heello->users->me();
 
 // A non-auth'd call
 $user = $heello->users->show(array(
   'id' => 3
 ));
 ```
+
+For more examples see '/examples'
 
 ## Contributors
 
