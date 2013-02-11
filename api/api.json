@@ -98,7 +98,13 @@
 			"method": "DELETE",
 			"required_params": ["access_token","id"],
 			"requires_auth": true
-		}
+		},
+    "search": {
+      "url": "/search",
+      "method": "GET",
+      "required_params": ["key"],
+      "requires_auth": false
+    }
 	},
 	"places": {
 		"search": {
