@@ -15,7 +15,6 @@ namespace Heello;
 class API {
   const SECURE = true;
   const DOMAIN = "api.heello.com";
-  const AUTH_DOMAIN = "heello.com";
   const VERSION = 1;
 
 	private static $API_PATH;

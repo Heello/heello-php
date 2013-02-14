@@ -63,7 +63,7 @@ class Client {
       throw new APIException("Client ID required to build authorization URL");
     }
 
-  	$url = Request::get_auth_request_url_base();
+  	$url = Request::get_request_url_base();
     $url .= "oauth/authorize?";
 
     $client = self::$config->get_client();
@@ -110,7 +110,7 @@ class Client {
   }
 
 	private function prepare_token_request(){
-    $request = new Request(Request::POST, '/oauth/token', true);
+    $request = new Request(Request::POST, '/oauth/token');
 
     $client = self::$config->get_client();
     $request->addParameter("client_id", $client['id']);
