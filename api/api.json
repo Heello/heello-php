@@ -7,9 +7,9 @@
 			"requires_auth": true
 		},
 		"checkins": {
-			"url": ":id/checkins",
+			"url": "checkins",
 			"method": "GET",
-			"required_params": ["id","access_token"],
+			"required_params": ["access_token"],
 			"requires_auth": true
 		},
 		"show": {
