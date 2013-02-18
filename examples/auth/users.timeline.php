@@ -18,7 +18,9 @@
 
   try{
     // Array of Heello Pings from the auth'd user's timeline
-    $pings = $api->users->me();
+    $pings = $api->users->timeline(array(
+      "count" => 1
+    ));
 
     print_r($pings);
   }

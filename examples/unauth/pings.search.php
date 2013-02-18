@@ -8,21 +8,14 @@
   $api_application_key = "APPLICATION_KEY";
   $api_application_secret = "APPLICATION_SECRET";
 
-  // You can get an access token and refresh token by implementing the auth
-  // flow described at (or use the demo provided):
-  // http://developer.heello.com/guides/authentication
-  $access_token = "ACCESS_TOKEN";
-
   $api = new Heello\Client($api_application_key, $api_application_secret);
-  Heello\Client::config()->set_access_token($access_token);
 
   try{
-    // Returns a list of Ping(s) that have been designated as a checkin
-    $checkins = $api->users->checkins(array(
-      "count" => 1
+    $ping = $api->pings->search(array(
+      "query" => "api"
     ));
 
-    print_r($checkins);
+    print_r($ping);
   } catch (Exception $e){
     print $e->getMessage();
   }

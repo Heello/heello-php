@@ -17,12 +17,16 @@
   Heello\Client::config()->set_access_token($access_token);
 
   try{
-    // Returns a list of Ping(s) that have been designated as a checkin
-    $checkins = $api->users->checkins(array(
-      "count" => 1
+    // Array of notifications for the auth'd user
+    $places = $api->places->search(array(
+      "count" => 4,
+      "name" => "Starbucks",
+      "lat" => 32.78411,
+      "lon" => -79.93823
     ));
 
-    print_r($checkins);
-  } catch (Exception $e){
+    print_r($places);
+  }
+  catch (Exception $e){
     print $e->getMessage();
   }

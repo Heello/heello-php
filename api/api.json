@@ -130,7 +130,7 @@
 		"show": {
 			"url": ":id",
 			"method": "GET",
-			"required_params": ["access_token"],
+			"required_params": ["key","id"],
 			"requires_auth": false
 		},
 		"create": {
