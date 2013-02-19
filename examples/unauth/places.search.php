@@ -16,16 +16,52 @@
   $api = new Heello\Client($api_application_key, $api_application_secret);
   Heello\Client::config()->set_access_token($access_token);
 
+  // Do a basic search
   try{
     $places = $api->places->search(array(
-      "count" => 4,
-      "name" => "Starbucks",
-      "lat" => 32.78411,
-      "lon" => -79.93823
+      "lat" => 32.78167,
+      "long" => -79.93433
     ));
-
-    print_r($places);
-  }
-  catch (Exception $e){
+  } catch (Exception $e){
     print $e->getMessage();
   }
+
+  // Narrow it down
+  try{
+    $places = $api->places->search(array(
+      "lat" => 32.78167,
+      "long" => -79.93433,
+      "category" => "coffee"
+    ));
+  } catch (Exception $e){
+    print $e->getMessage();
+  }
+
+  // Finding places "near" you
+  try{
+    // Note: max_distance when paired with "english" units, is in miles
+    $places = $api->places->search(array(
+      "lat" => 32.78167,
+      "long" => -79.93433,
+      "category" => "coffee",
+      "max_distance" => 2,
+      "count" => 5,
+      "distance_units" => "english"
+    ));
+
+    // or for those who love metric
+
+    // Note: max_distance when paired with "metric" units, is in km
+    $places = $api->places->search(array(
+      "lat" => 32.78167,
+      "long" => -79.93433,
+      "category" => "coffee",
+      "max_distance" => 2,
+      "count" => 5,
+      "distance_units" => "metric"
+    ));
+
+  } catch (Exception $e){
+    print $e->getMessage();
+  }
+
