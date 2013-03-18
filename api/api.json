@@ -146,7 +146,7 @@
 			"url": "/",
 			"method": "PUT",
 			"required_params": ["access_token"],
-      "attachments": ["avatar","background","cover"],
+      "attachments": ["user[avatar]","user[background]","user[cover]"],
 			"requires_auth": true
 		}
 	},
