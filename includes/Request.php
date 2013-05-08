@@ -74,7 +74,6 @@ class Request {
 		} else{
 			$client_config = Client::config()->get_client();
 			$this->addParameter('key', $client_config['id']);
-			$this->addParameter('secret', $client_config['secret']);
 		}
 
 		try {
