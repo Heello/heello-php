@@ -146,7 +146,7 @@
 			"url": "/",
 			"method": "PUT",
 			"required_params": ["access_token"],
-      "attachments": ["user[avatar]","user[background]","user[cover]"],
+      "attachments": ["avatar","background","cover"],
 			"requires_auth": true
 		}
 	},
@@ -155,6 +155,20 @@
       "url": "public",
       "method": "GET",
       "required_params": ["key"],
+      "requires_auth": false
+    }
+  },
+  "categories":{
+    "get":{
+      "url": "/",
+      "method": "GET",
+      "required_params": ["key"],
+      "requires_auth": false
+    },
+    "show":{
+      "url": ":id",
+      "method": "GET",
+      "required_params": ["key","id"],
       "requires_auth": false
     }
   }
