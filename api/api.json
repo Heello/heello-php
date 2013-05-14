@@ -165,6 +165,18 @@
       "required_params": ["key"],
       "requires_auth": false
     },
+    "primary":{
+      "url": "/primary",
+      "method": "GET",
+      "required_params": ["key"],
+      "requires_auth": false
+    },
+    "secondary":{
+      "url": "/secondary/:id",
+      "method": "GET",
+      "required_params": ["key","id"],
+      "requires_auth": false
+    },
     "show":{
       "url": ":id",
       "method": "GET",
