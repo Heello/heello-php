@@ -65,6 +65,18 @@
 			"method": "DELETE",
 			"required_params": ["id","access_token"],
 			"requires_auth": true
+		},
+		"block": {
+			"url": ":id/block",
+			"method": "POST",
+			"required_params": ["id","access_token"],
+			"requires_auth": true
+		},
+		"unblock": {
+			"url": ":id/block",
+			"method": "DELETE",
+			"required_params": ["id","access_token"],
+			"requires_auth": true
 		}
 	},
 	"pings": {
