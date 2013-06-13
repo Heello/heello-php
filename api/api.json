@@ -30,6 +30,12 @@
 			"required_params": ["id","key"],
 			"requires_auth": false
 		},
+		"blocking": {
+			"url": "blocking",
+			"method": "GET",
+			"required_params": ["access_token"],
+			"requires_auth": true
+		},
 		"timeline": {
 			"url": "timeline",
 			"method": "GET",
